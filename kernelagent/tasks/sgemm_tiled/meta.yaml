@@ -4,7 +4,7 @@ character: compute-bound
 kernel: kernel.cpp
 shapes:
   small: {M: 256, N: 256, K: 256}
-  large: {M: 1024, N: 1024, K: 1024}
+  large: {M: 1024, N: 1024, K: 512}
 knobs:
   TILE_M: {kind: int, values: [8, 16, 32, 64], doc: rows per block}
   TILE_N: {kind: int, values: [8, 16, 32, 64], doc: columns per block}

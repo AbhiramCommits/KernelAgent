@@ -11,44 +11,59 @@ import re
 from pathlib import Path
 from typing import Any
 
-import yaml
-
 _LINE_RE = re.compile(r"Line:\s*'?(\d+)")
 _WIDTH_RE = re.compile(r"vectorization width:\s*(\d+)")
 _INTERLEAVE_RE = re.compile(r"interleaved count:\s*(\d+)")
 
 
-class _OptLoader(yaml.SafeLoader):
-    """SafeLoader that keeps unknown optimization-record tags as ``__record__``."""
+_BLOCK_RE = re.compile(r"(?m)^--- !(\w+)\s*$")
+_PASS_RE = re.compile(r"(?m)^Pass:\s+(\S+)")
+_NAME_RE = re.compile(r"(?m)^Name:\s+(\S+)")
+_LOC_RE = re.compile(r"File:\s*'?([^'\n,}]*)'?.*?Line:\s*'?(\d+)", re.S)
+_ARG_RE = re.compile(r"(?m)^\s*-\s+([A-Za-z0-9_]+):\s*(.*)$")
 
 
-def _construct_record(loader: _OptLoader, tag_suffix: str, node: yaml.Node) -> Any:
-    if isinstance(node, yaml.MappingNode):
-        data = loader.construct_mapping(node, deep=True)
-        if isinstance(data, dict):
-            data["__record__"] = tag_suffix
-            return data
-        return data
-    if isinstance(node, yaml.SequenceNode):
-        return loader.construct_sequence(node, deep=True)
-    return loader.construct_scalar(node)  # type: ignore[arg-type]
+def _unquote(value: str) -> str:
+    text = value.strip()
+    if len(text) >= 2 and text[0] == text[-1] and text[0] in ("'", '"'):
+        text = text[1:-1]
+    text = text.replace("\\n", " ").replace('\\"', '"')
+    return " ".join(text.split())
 
 
-_OptLoader.add_multi_constructor("!", _construct_record)
+def _parse_opt_blocks(text: str) -> list[dict[str, Any]]:
+    """Fast line parser for clang's optimization-record YAML.
 
-
-def _args_text(args: Any) -> str:
-    if not isinstance(args, list):
-        return ""
-    pieces: list[str] = []
-    for arg in args:
-        if not isinstance(arg, dict):
+    A real record for one kernel can exceed 3 MB; PyYAML spends seconds on it,
+    while this parser only needs the fields the diagnostics use.
+    """
+    parts = _BLOCK_RE.split(text)
+    records: list[dict[str, Any]] = []
+    for index in range(1, len(parts) - 1, 2):
+        tag = parts[index]
+        body = parts[index + 1]
+        pass_match = _PASS_RE.search(body)
+        name_match = _NAME_RE.search(body)
+        if not pass_match:
             continue
-        for key in ("String", "Callee", "Reason", "Pass"):
-            value = arg.get(key)
-            if value is not None:
-                pieces.append(str(value))
-    return " ".join(pieces).strip()
+        record: dict[str, Any] = {
+            "__record__": tag,
+            "Pass": pass_match.group(1),
+            "Name": name_match.group(1) if name_match else "",
+            "Args": [],
+        }
+        loc_match = _LOC_RE.search(body)
+        if loc_match:
+            record["DebugLoc"] = {"File": loc_match.group(1), "Line": int(loc_match.group(2))}
+        args_start = body.find("\nArgs:")
+        if args_start >= 0:
+            section = body[args_start:]
+            for arg_match in _ARG_RE.finditer(section):
+                key = arg_match.group(1)
+                value = _unquote(arg_match.group(2))
+                record["Args"].append({key: value})
+        records.append(record)
+    return records
 
 
 def _arg_number(record: dict[str, Any], key: str) -> int | None:
@@ -79,6 +94,20 @@ def _loc_file(record: dict[str, Any]) -> str:
     return ""
 
 
+def _args_text(args: Any) -> str:
+    if not isinstance(args, list):
+        return ""
+    pieces: list[str] = []
+    for arg in args:
+        if not isinstance(arg, dict):
+            continue
+        for key in ("String", "Callee", "Reason", "Pass"):
+            value = arg.get(key)
+            if value is not None:
+                pieces.append(str(value))
+    return " ".join(pieces).strip()
+
+
 def parse_opt_record(
     path: str | Path, interest_files: set[str] | None = None
 ) -> dict[str, Any]:
@@ -92,24 +121,12 @@ def parse_opt_record(
     """
     target = Path(path)
     text = target.read_text(encoding="utf-8", errors="replace") if target.exists() else ""
-    records: list[dict[str, Any]] = []
-    if text.strip():
-        try:
-            for doc in yaml.load_all(text, Loader=_OptLoader):
-                if isinstance(doc, dict):
-                    records.append(doc)
-        except yaml.YAMLError:
-            # Malformed/truncated records: keep what can be recovered line-wise.
-            records = []
+    records = _parse_opt_blocks(text) if text.strip() else []
 
     def interesting(record: dict[str, Any]) -> bool:
         if not interest_files:
             return True
-        loc = record.get("DebugLoc")
-        if not isinstance(loc, dict):
-            return False
-        file_name = str(loc.get("File", ""))
-        return file_name.rsplit("/", 1)[-1] in interest_files
+        return _loc_file(record).rsplit("/", 1)[-1] in interest_files
 
     vectorized = 0
     widths: list[int] = []

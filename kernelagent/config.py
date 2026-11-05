@@ -43,6 +43,8 @@ DEFAULT_RTOL = 1e-4
 DEFAULT_ATOL = 1e-4
 SPEEDUP_SOLVE_THRESHOLD = 1.05
 NOISE_RERUN_RATIO = 0.15  # MAD/median above this triggers one re-run
+MAX_WALL_S = 300.0  # per-search wall-clock cap
+MAX_REPAIR_ATTEMPTS = 2
 
 # Compiler detection order. The first available compiler is the default.
 COMPILER_CANDIDATES = ("clang++", "g++")

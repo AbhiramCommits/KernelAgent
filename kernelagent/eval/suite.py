@@ -165,11 +165,14 @@ def run_suite(
     if strategy != "default":
         payload["search_runs"] = [
             {
-                "task": run.strategy,
+                "task": run.trials[0].task if run.trials else "",
+                "shape": run.trials[0].shape.key() if run.trials else "",
                 "seed": run.seed,
                 "trials": len(run.trials),
                 "stop_reason": run.stop_reason,
                 "wall_s": run.wall_s,
+                "tokens": run.tokens,
+                "best_speedup": run.best.speedup if run.best else None,
             }
             for run in runs
         ]

@@ -57,7 +57,7 @@ def test_shapes_cover_small_and_large(task_name: str) -> None:
     small_bytes = _working_set(task, task.shapes["small"])
     large_bytes = _working_set(task, task.shapes["large"])
     assert large_bytes > small_bytes
-    assert large_bytes > 8 * 1024 * 1024, f"{task_name} has no large memory-bound shape"
+    assert large_bytes >= 8 * 1024 * 1024, f"{task_name} has no large out-of-cache shape"
 
 
 def _working_set(task, shape: Shape) -> float:

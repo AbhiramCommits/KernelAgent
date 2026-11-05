@@ -148,6 +148,7 @@ def search(
 ) -> None:
     """Run one search episode and append its trials to the ledger."""
     from .agent.loop import run_search
+    from .ledger import TrialLedger
 
     run = run_search(
         task=task,
@@ -157,6 +158,8 @@ def search(
         seed=seed,
         patience=patience,
         replay=replay or None,
+        ledger=TrialLedger(),
+        confirm=True,
     )
     if json_out:
         _echo_json(run.model_dump(mode="json"))
@@ -168,6 +171,11 @@ def search(
             f"{best.speedup if best and best.speedup else float('nan'):.3f}x"
         )
         console.print(f"wall: {run.wall_s:.2f}s, repairs: {run.repair_attempts}, tokens: {run.tokens}")
+        if run.confirmation is not None:
+            console.print(
+                f"confirmed: {run.confirmation.speedup:.3f}x over baseline, "
+                f"spread {run.confirmation.spread_pct:.2f}% over {run.confirmation.repeats} re-measurements"
+            )
     raise typer.Exit(0 if run.best is not None else 1)
 
 
@@ -177,12 +185,20 @@ def run_suite(
     budget: int = typer.Option(config.DEFAULT_BUDGET),
     out: Path = typer.Option(config.RESULTS_DIR / "baseline.json"),
     seeds: str = typer.Option("0"),
+    tasks_filter: str = typer.Option("", "--tasks", help="Comma-separated task names"),
     json_out: bool = typer.Option(False, "--json"),
 ) -> None:
     """Run every (task, shape) pair and write a baseline table."""
     from .eval.suite import run_suite as _run_suite
 
-    summary = _run_suite(strategy=strategy, budget=budget, seeds=[int(s) for s in seeds.split(",")], out=out)
+    chosen_tasks = [name for name in tasks_filter.split(",") if name] or None
+    summary = _run_suite(
+        strategy=strategy,
+        budget=budget,
+        seeds=[int(s) for s in seeds.split(",")],
+        out=out,
+        tasks=chosen_tasks,
+    )
     if json_out:
         _echo_json(summary)
     else:

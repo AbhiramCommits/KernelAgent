@@ -201,20 +201,6 @@ class Trial(BaseModel):
         )
 
 
-class SearchRun(BaseModel):
-    """A complete search episode over one task and shape."""
-
-    strategy: str
-    seed: int
-    budget: int
-    trials: list[Trial] = Field(default_factory=list)
-    best: Trial | None = None
-    wall_s: float = 0.0
-    tokens: int = 0
-    repair_attempts: int = 0
-    stop_reason: str = ""
-
-
 class Confirmation(BaseModel):
     """Re-measurement of a winning trial, to avoid reporting a lucky sample."""
 
@@ -230,6 +216,21 @@ class Confirmation(BaseModel):
     repeats: int
     noise_ratios: list[float] = Field(default_factory=list)
     check_passed: bool = True
+
+
+class SearchRun(BaseModel):
+    """A complete search episode over one task and shape."""
+
+    strategy: str
+    seed: int
+    budget: int
+    trials: list[Trial] = Field(default_factory=list)
+    best: Trial | None = None
+    wall_s: float = 0.0
+    tokens: int = 0
+    repair_attempts: int = 0
+    stop_reason: str = ""
+    confirmation: Confirmation | None = None
 
 
 class ToolError(BaseModel):
