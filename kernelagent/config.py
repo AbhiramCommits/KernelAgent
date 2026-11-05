@@ -49,5 +49,16 @@ MAX_REPAIR_ATTEMPTS = 2
 # Compiler detection order. The first available compiler is the default.
 COMPILER_CANDIDATES = ("clang++", "g++")
 
+# Extra compiler flags a proposer may attach to a variant (build.py validates
+# them before anything reaches the compiler).
+CANDIDATE_FLAGS = [
+    "-funroll-loops",
+    "-fomit-frame-pointer",
+    "-ffast-math",
+    "-march=native",
+    "-fno-vectorize",
+    "-fno-slp-vectorize",
+]
+
 # knobs / flags that are safe to feed to a compiler
 MAX_TOOL_OUTPUT_CHARS = 6000

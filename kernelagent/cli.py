@@ -235,15 +235,37 @@ def rank_eval(
     """Leave-one-task-out ranking evaluation for the learned selector."""
     from .select.evaluate import run_loto_evaluation
 
-    if collect:
+    if collect or not dataset.exists():
         from .select.collect import collect_dataset
 
+        console.print(f"collecting measured ranking dataset -> {dataset}")
         collect_dataset(per_task=per_task, out=dataset)
     metrics = run_loto_evaluation(dataset_path=dataset)
     if json_out:
         _echo_json(metrics)
     else:
-        console.print_json(json.dumps(metrics, default=str))
+        table = Table(show_header=True, header_style="bold", title="Leave-one-task-out ranking")
+        table.add_column("Model")
+        table.add_column("Spearman")
+        table.add_column("Kendall")
+        table.add_column("Top-1 regret")
+        table.add_column("NDCG@5")
+        table.add_column("MAE(log)")
+        for key, label in (("cost_model", "cost model"), ("pairwise_ranker", "pairwise ranker")):
+            values = metrics.get(key, {})
+            table.add_row(
+                label,
+                f"{values.get('spearman', 0):.3f}",
+                f"{values.get('kendall', 0):.3f}",
+                f"{values.get('top1_regret', 0):.3f}",
+                f"{values.get('ndcg_at_5', 0):.3f}",
+                f"{values.get('mae_log', float('nan')):.3f}" if "mae_log" in values else "-",
+            )
+        console.print(table)
+        console.print(
+            f"records={metrics['records']} tasks={len(metrics['tasks'])} "
+            f"leakage={metrics['leakage']}"
+        )
 
 
 @app.command()
