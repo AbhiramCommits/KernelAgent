@@ -1,0 +1,10 @@
+==PROF== Connected to process 4242 (/tmp/katest/gemm)
+==WARNING== Skipping kernel because it is too small
+"ID","Process ID","Process Name","Host Name","Kernel Name","Kernel Time","Context","Stream","Block Size","Grid Size","Device","CC","Section Name","Metric Name","Metric Unit","Metric Value"
+"0","4242","gemm","localhost","sgemm_kernel","2026-11-04T10:00:00","1","7","256","4096","0","8.0","SpeedOfLight","gpu__time_duration.sum","ns","812345"
+"0","4242","gemm","localhost","sgemm_kernel","2026-11-04T10:00:00","1","7","256","4096","0","8.0","Occupancy","sm__warps_active.avg.pct_of_peak_sustained_active","%","62.50"
+"0","4242","gemm","localhost","sgemm_kernel","2026-11-04T10:00:00","1","7","256","4096","0","8.0","SpeedOfLight","dram__throughput.avg.pct_of_peak_sustained_elapsed","%","41.20"
+"0","4242","gemm","localhost","sgemm_kernel","2026-11-04T10:00:00","1","7","256","4096","0","8.0","SpeedOfLight","sm__throughput.avg.pct_of_peak_sustained_elapsed","%","78.90"
+"0","4242","gemm","localhost","sgemm_kernel","2026-11-04T10:00:00","1","7","256","4096","0","8.0","WarpStateStats","smsp__warp_issue_stalled_long_scoreboard_per_warp_active.pct","%","24.5"
+"0","4242","gemm","localhost","sgemm_kernel","2026-11-04T10:00:00","1","7","256","4096","0","8.0","WarpStateStats","smsp__warp_issue_stalled_wait_per_warp_active.pct","%","11.0"
+==PROF== Disconnected from process 4242

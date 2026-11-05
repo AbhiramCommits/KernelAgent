@@ -1,0 +1,6 @@
+[2026-11-04 10:00:00] Triton kernel matmul_kernel compiled with num_warps=8 num_stages=3
+ptxas info    : Compiling entry function 'matmul_kernel' for 'sm_80'
+ptxas info    : Function properties for matmul_kernel
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 168 registers, 98304 bytes smem, 320 bytes cmem[0]
+kernel_name=matmul_kernel num_warps=8 num_stages=3 shared=98304

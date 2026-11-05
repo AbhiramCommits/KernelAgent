@@ -1,0 +1,1459 @@
+--- !Passed
+Pass:            inline
+Name:            Inlined
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 14, Column: 3 }
+Function:        main
+Args:
+  - String:          ''''
+  - Callee:          _Z15vectorized_axpyifPKfPf
+    DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 2, Column: 0 }
+  - String:          ''' inlined into '''
+  - Caller:          main
+    DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 11, Column: 0 }
+  - String:          ''''
+  - String:          ' with '
+  - String:          '(cost='
+  - Cost:            '-15'
+  - String:          ', threshold='
+  - Threshold:       '250'
+  - String:          ')'
+  - String:          ' at callsite '
+  - String:          main
+  - String:          ':'
+  - Line:            '3'
+  - String:          ':'
+  - Column:          '3'
+  - String:          ';'
+...
+--- !Passed
+Pass:            inline
+Name:            Inlined
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 15, Column: 3 }
+Function:        main
+Args:
+  - String:          ''''
+  - Callee:          _Z15dependency_scaniPf
+    DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 5, Column: 0 }
+  - String:          ''' inlined into '''
+  - Caller:          main
+    DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 11, Column: 0 }
+  - String:          ''''
+  - String:          ' with '
+  - String:          '(cost='
+  - Cost:            '-10'
+  - String:          ', threshold='
+  - Threshold:       '250'
+  - String:          ')'
+  - String:          ' at callsite '
+  - String:          main
+  - String:          ':'
+  - Line:            '4'
+  - String:          ':'
+  - Column:          '3'
+  - String:          ';'
+...
+--- !Passed
+Pass:            inline
+Name:            Inlined
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 16, Column: 3 }
+Function:        main
+Args:
+  - String:          ''''
+  - Callee:          _Z14strided_gatheriPKfiPf
+    DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 8, Column: 0 }
+  - String:          ''' inlined into '''
+  - Caller:          main
+    DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 11, Column: 0 }
+  - String:          ''''
+  - String:          ' with '
+  - String:          '(cost='
+  - Cost:            '-20'
+  - String:          ', threshold='
+  - Threshold:       '250'
+  - String:          ')'
+  - String:          ' at callsite '
+  - String:          main
+  - String:          ':'
+  - Line:            '5'
+  - String:          ':'
+  - Column:          '3'
+  - String:          ';'
+...
+--- !Passed
+Pass:            loop-idiom
+Name:            ProcessLoopStridedStore
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 56 }
+Function:        main
+Args:
+  - String:          'Transformed loop-strided store in '
+  - Function:        main
+    DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 11, Column: 0 }
+  - String:          ' function into a call to '
+  - NewFunction:     llvm.experimental.memset.pattern.p0.f32.i64
+  - String:          '() intrinsic'
+  - FromBlock:       ''
+  - ToBlock:         ''
+...
+--- !Passed
+Pass:            loop-unroll
+Name:            FullyUnrolled
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 3 }
+Function:        main
+Args:
+  - String:          'completely unrolled loop with '
+  - UnrollCount:     '64'
+  - String:          ' iterations'
+...
+--- !Passed
+Pass:            loop-unroll
+Name:            FullyUnrolled
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 6, Column: 3 }
+Function:        main
+Args:
+  - String:          'completely unrolled loop with '
+  - UnrollCount:     '63'
+  - String:          ' iterations'
+...
+--- !Passed
+Pass:            loop-unroll
+Name:            FullyUnrolled
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 3 }
+Function:        main
+Args:
+  - String:          'completely unrolled loop with '
+  - UnrollCount:     '8'
+  - String:          ' iterations'
+...
+--- !Passed
+Pass:            gvn
+Name:            LoadElim
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 17, Column: 15 }
+Function:        main
+Args:
+  - String:          'load of type '
+  - Type:            float
+  - String:          ' eliminated'
+  - String:          ' in favor of '
+  - InfavorOfValue:  '0.000000e+00'
+...
+--- !Passed
+Pass:            loop-vectorize
+Name:            Vectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'vectorized '
+  - String:          ''
+  - String:          'loop (vectorization width: '
+  - VectorizationFactor: '4'
+  - String:          ', interleaved count: '
+  - InterleaveCount: '4'
+  - String:          ')'
+...
+--- !Missed
+Pass:            slp-vectorizer
+Name:            NotBeneficial
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'List vectorization was possible but not beneficial with cost '
+  - Cost:            '0'
+  - String:          ' >= '
+  - Treshold:        '0'
+...
+--- !Missed
+Pass:            slp-vectorizer
+Name:            NotBeneficial
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'List vectorization was possible but not beneficial with cost '
+  - Cost:            '0'
+  - String:          ' >= '
+  - Treshold:        '0'
+...
+--- !Analysis
+Pass:            loop-vectorize
+Name:            UnsafeDep
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 6, Column: 36 }
+Function:        _Z15dependency_scaniPf
+Args:
+  - String:          'loop not vectorized: '
+  - String:          'unsafe dependent memory operations in loop. Use #pragma clang loop distribute(enable) to allow loop distribution to attempt to isolate the offending operations into a separate loop'
+  - String:          "\nBackward loop carried data dependence."
+  - String:          ' Memory location is the same as accessed at '
+  - Location:        '/tmp/katest/fix.cpp:6:38'
+    DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 6, Column: 38 }
+...
+--- !Missed
+Pass:            loop-vectorize
+Name:            MissedDetails
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 6, Column: 3 }
+Function:        _Z15dependency_scaniPf
+Args:
+  - String:          loop not vectorized
+...
+--- !Passed
+Pass:            loop-vectorize
+Name:            Vectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 3 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'vectorized '
+  - String:          ''
+  - String:          'loop (vectorization width: '
+  - VectorizationFactor: '4'
+  - String:          ', interleaved count: '
+  - InterleaveCount: '4'
+  - String:          ')'
+...
+--- !Missed
+Pass:            slp-vectorizer
+Name:            NotBeneficial
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 3 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'List vectorization was possible but not beneficial with cost '
+  - Cost:            '0'
+  - String:          ' >= '
+  - Treshold:        '0'
+...
+--- !Missed
+Pass:            slp-vectorizer
+Name:            NotPossible
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 21 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'Cannot SLP vectorize list: vectorization was impossible'
+  - String:          ' with available vectorization factors'
+...
+--- !Passed
+Pass:            loop-vectorize
+Name:            Vectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        main
+Args:
+  - String:          'vectorized '
+  - String:          ''
+  - String:          'loop (vectorization width: '
+  - VectorizationFactor: '4'
+  - String:          ', interleaved count: '
+  - InterleaveCount: '4'
+  - String:          ')'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            slp-vectorizer
+Name:            StoresVectorized
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 13, Column: 39 }
+Function:        main
+Args:
+  - String:          'Stores SLP vectorized with cost '
+  - Cost:            '-3'
+  - String:          ' and with tree size '
+  - TreeSize:        '2'
+...
+--- !Passed
+Pass:            loop-unroll
+Name:            FullyUnrolled
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        main
+Args:
+  - String:          'completely unrolled loop with '
+  - UnrollCount:     '4'
+  - String:          ' iterations'
+...
+--- !Missed
+Pass:            regalloc
+Name:            SpillReloadCopies
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 2, Column: 1 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - NumVRCopies:     '5'
+  - String:          ' virtual registers copies '
+  - TotalCopiesCost: '7.275391e-01'
+  - String:          ' total copies cost '
+  - String:          generated in function
+...
+--- !Analysis
+Pass:            prologepilog
+Name:            StackSize
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 2, Column: 0 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - NumStackBytes:   '0'
+  - String:          ' stack bytes in function '''
+  - Function:        _Z15vectorized_axpyifPKfPf
+  - String:          ''''
+...
+--- !Analysis
+Pass:            prologepilog
+Name:            StackSize
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 5, Column: 0 }
+Function:        _Z15dependency_scaniPf
+Args:
+  - NumStackBytes:   '0'
+  - String:          ' stack bytes in function '''
+  - Function:        _Z15dependency_scaniPf
+  - String:          ''''
+...
+--- !Missed
+Pass:            regalloc
+Name:            SpillReloadCopies
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 8, Column: 1 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - NumVRCopies:     '4'
+  - String:          ' virtual registers copies '
+  - TotalCopiesCost: '1.142578e+00'
+  - String:          ' total copies cost '
+  - String:          generated in function
+...
+--- !Analysis
+Pass:            prologepilog
+Name:            StackSize
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 8, Column: 0 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - NumStackBytes:   '0'
+  - String:          ' stack bytes in function '''
+  - Function:        _Z14strided_gatheriPKfiPf
+  - String:          ''''
+...
+--- !Passed
+Pass:            stack-protector
+Name:            StackProtectorBuffer
+Function:        main
+Args:
+  - String:          'Stack protection applied to function '
+  - Function:        main
+    DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 11, Column: 0 }
+  - String:          ' due to a stack allocated buffer or struct containing a buffer'
+...
+--- !Missed
+Pass:            regalloc
+Name:            SpillReloadCopies
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 11, Column: 1 }
+Function:        main
+Args:
+  - NumVRCopies:     '2'
+  - String:          ' virtual registers copies '
+  - TotalCopiesCost: '1.999999e+00'
+  - String:          ' total copies cost '
+  - String:          generated in function
+...
+--- !Analysis
+Pass:            prologepilog
+Name:            StackSize
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 11, Column: 0 }
+Function:        main
+Args:
+  - NumStackBytes:   '304'
+  - String:          ' stack bytes in function '''
+  - Function:        main
+  - String:          ''''
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          SUBSWri
+  - String:          ': '
+  - INST_SUBSWri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 21 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          ORRWrs
+  - String:          ': '
+  - INST_ORRWrs:     '1'
+  - String:          "\n"
+  - String:          SUBSWri
+  - String:          ': '
+  - INST_SUBSWri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ADDXrs
+  - String:          ': '
+  - INST_ADDXrs:     '2'
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          CCMPXr
+  - String:          ': '
+  - INST_CCMPXr:     '1'
+  - String:          "\n"
+  - String:          SUBSXrs
+  - String:          ': '
+  - INST_SUBSXrs:    '1'
+  - String:          "\n"
+  - String:          UBFMXri
+  - String:          ': '
+  - INST_UBFMXri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          SUBSWri
+  - String:          ': '
+  - INST_SUBSWri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          B
+  - String:          ': '
+  - INST_B:          '1'
+  - String:          "\n"
+  - String:          MOVZXi
+  - String:          ': '
+  - INST_MOVZXi:     '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          MOVZXi
+  - String:          ': '
+  - INST_MOVZXi:     '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ADDXrs
+  - String:          ': '
+  - INST_ADDXrs:     '2'
+  - String:          "\n"
+  - String:          SUBXrs
+  - String:          ': '
+  - INST_SUBXrs:     '1'
+  - String:          "\n"
+  - String:          UBFMXri
+  - String:          ': '
+  - INST_UBFMXri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 42 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          FMADDSrrr
+  - String:          ': '
+  - INST_FMADDSrrr:  '1'
+  - String:          "\n"
+  - String:          LDRSpost
+  - String:          ': '
+  - INST_LDRSpost:   '1'
+  - String:          "\n"
+  - String:          LDRSui
+  - String:          ': '
+  - INST_LDRSui:     '1'
+  - String:          "\n"
+  - String:          STRSpost
+  - String:          ': '
+  - INST_STRSpost:   '1'
+  - String:          "\n"
+  - String:          SUBSXri
+  - String:          ': '
+  - INST_SUBSXri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 4, Column: 1 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          RET
+  - String:          ': '
+  - INST_RET:        '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ADDXri
+  - String:          ': '
+  - INST_ADDXri:     '2'
+  - String:          "\n"
+  - String:          ANDXri
+  - String:          ': '
+  - INST_ANDXri:     '1'
+  - String:          "\n"
+  - String:          ORRXrs
+  - String:          ': '
+  - INST_ORRXrs:     '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 42 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          FMLAv4i32_indexed
+  - String:          ': '
+  - INST_FMLAv4i32_indexed: '4'
+  - String:          "\n"
+  - String:          LDPQi
+  - String:          ': '
+  - INST_LDPQi:      '3'
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          LDPQpost
+  - String:          ': '
+  - INST_LDPQpost:   '1'
+  - String:          "\n"
+  - String:          STPQi
+  - String:          ': '
+  - INST_STPQi:      '1'
+  - String:          "\n"
+  - String:          STPQpost
+  - String:          ': '
+  - INST_STPQpost:   '1'
+  - String:          "\n"
+  - String:          SUBSXri
+  - String:          ': '
+  - INST_SUBSXri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          SUBSXrs
+  - String:          ': '
+  - INST_SUBSXrs:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ANDSXri
+  - String:          ': '
+  - INST_ANDSXri:    '1'
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ADDXrs
+  - String:          ': '
+  - INST_ADDXrs:     '2'
+  - String:          "\n"
+  - String:          ANDXri
+  - String:          ': '
+  - INST_ANDXri:     '1'
+  - String:          "\n"
+  - String:          ORRXrs
+  - String:          ': '
+  - INST_ORRXrs:     '1'
+  - String:          "\n"
+  - String:          SUBXrs
+  - String:          ': '
+  - INST_SUBXrs:     '1'
+  - String:          "\n"
+  - String:          UBFMXri
+  - String:          ': '
+  - INST_UBFMXri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 42 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ADDSXri
+  - String:          ': '
+  - INST_ADDSXri:    '1'
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          FMLAv4i32_indexed
+  - String:          ': '
+  - INST_FMLAv4i32_indexed: '1'
+  - String:          "\n"
+  - String:          LDRQpost
+  - String:          ': '
+  - INST_LDRQpost:   '1'
+  - String:          "\n"
+  - String:          LDRQui
+  - String:          ': '
+  - INST_LDRQui:     '1'
+  - String:          "\n"
+  - String:          STRQpost
+  - String:          ': '
+  - INST_STRQpost:   '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 3, Column: 3 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          B
+  - String:          ': '
+  - INST_B:          '1'
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          SUBSXrs
+  - String:          ': '
+  - INST_SUBSXrs:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionCount
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 2, Column: 0 }
+Function:        _Z15vectorized_axpyifPKfPf
+Args:
+  - NumInstructions: '62'
+  - String:          ' instructions in function'
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 6, Column: 3 }
+Function:        _Z15dependency_scaniPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          SUBSWri
+  - String:          ': '
+  - INST_SUBSWri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 6, Column: 21 }
+Function:        _Z15dependency_scaniPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          FMOVSi
+  - String:          ': '
+  - INST_FMOVSi:     '2'
+  - String:          "\n"
+  - String:          LDRSpost
+  - String:          ': '
+  - INST_LDRSpost:   '1'
+  - String:          "\n"
+  - String:          ORRWrs
+  - String:          ': '
+  - INST_ORRWrs:     '1'
+  - String:          "\n"
+  - String:          SUBXri
+  - String:          ': '
+  - INST_SUBXri:     '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 6, Column: 54 }
+Function:        _Z15dependency_scaniPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          FMADDSrrr
+  - String:          ': '
+  - INST_FMADDSrrr:  '1'
+  - String:          "\n"
+  - String:          STRSpost
+  - String:          ': '
+  - INST_STRSpost:   '1'
+  - String:          "\n"
+  - String:          SUBSXri
+  - String:          ': '
+  - INST_SUBSXri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 7, Column: 1 }
+Function:        _Z15dependency_scaniPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          RET
+  - String:          ': '
+  - INST_RET:        '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionCount
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 5, Column: 0 }
+Function:        _Z15dependency_scaniPf
+Args:
+  - NumInstructions: '12'
+  - String:          ' instructions in function'
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          SUBSWri
+  - String:          ': '
+  - INST_SUBSWri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          MOVZXi
+  - String:          ': '
+  - INST_MOVZXi:     '1'
+  - String:          "\n"
+  - String:          ORRWrs
+  - String:          ': '
+  - INST_ORRWrs:     '1'
+  - String:          "\n"
+  - String:          SUBSWri
+  - String:          ': '
+  - INST_SUBSWri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 3 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          SUBSWri
+  - String:          ': '
+  - INST_SUBSWri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 3 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          SUBSXri
+  - String:          ': '
+  - INST_SUBSXri:    '1'
+  - String:          "\n"
+  - String:          SUBXrs
+  - String:          ': '
+  - INST_SUBXrs:     '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 3 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          SUBSWri
+  - String:          ': '
+  - INST_SUBSWri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          B
+  - String:          ': '
+  - INST_B:          '1'
+  - String:          "\n"
+  - String:          MOVZXi
+  - String:          ': '
+  - INST_MOVZXi:     '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 3 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ADDXri
+  - String:          ': '
+  - INST_ADDXri:     '2'
+  - String:          "\n"
+  - String:          ANDXri
+  - String:          ': '
+  - INST_ANDXri:     '1'
+  - String:          "\n"
+  - String:          ORRXrs
+  - String:          ': '
+  - INST_ORRXrs:     '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 40 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          LDPQi
+  - String:          ': '
+  - INST_LDPQi:      '1'
+  - String:          "\n"
+  - String:          LDPQpost
+  - String:          ': '
+  - INST_LDPQpost:   '1'
+  - String:          "\n"
+  - String:          STPQi
+  - String:          ': '
+  - INST_STPQi:      '1'
+  - String:          "\n"
+  - String:          STPQpost
+  - String:          ': '
+  - INST_STPQpost:   '1'
+  - String:          "\n"
+  - String:          SUBSXri
+  - String:          ': '
+  - INST_SUBSXri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 3 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          SUBSXrs
+  - String:          ': '
+  - INST_SUBSXrs:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 3 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ANDSXri
+  - String:          ': '
+  - INST_ANDSXri:    '1'
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ADDXrs
+  - String:          ': '
+  - INST_ADDXrs:     '2'
+  - String:          "\n"
+  - String:          ANDXri
+  - String:          ': '
+  - INST_ANDXri:     '1'
+  - String:          "\n"
+  - String:          ORRXrs
+  - String:          ': '
+  - INST_ORRXrs:     '1'
+  - String:          "\n"
+  - String:          SUBXrs
+  - String:          ': '
+  - INST_SUBXrs:     '1'
+  - String:          "\n"
+  - String:          UBFMXri
+  - String:          ': '
+  - INST_UBFMXri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 40 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ADDSXri
+  - String:          ': '
+  - INST_ADDSXri:    '1'
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          LDRQpost
+  - String:          ': '
+  - INST_LDRQpost:   '1'
+  - String:          "\n"
+  - String:          STRQpost
+  - String:          ': '
+  - INST_STRQpost:   '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 3 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          SUBSXrs
+  - String:          ': '
+  - INST_SUBSXrs:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 3 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ADDXrs
+  - String:          ': '
+  - INST_ADDXrs:     '2'
+  - String:          "\n"
+  - String:          SBFMXri
+  - String:          ': '
+  - INST_SBFMXri:    '1'
+  - String:          "\n"
+  - String:          SMADDLrrr
+  - String:          ': '
+  - INST_SMADDLrrr:  '1'
+  - String:          "\n"
+  - String:          SUBXrs
+  - String:          ': '
+  - INST_SUBXrs:     '1'
+  - String:          "\n"
+  - String:          UBFMXri
+  - String:          ': '
+  - INST_UBFMXri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 9, Column: 40 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          ADDXrs
+  - String:          ': '
+  - INST_ADDXrs:     '1'
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          LDRSui
+  - String:          ': '
+  - INST_LDRSui:     '1'
+  - String:          "\n"
+  - String:          STRSpost
+  - String:          ': '
+  - INST_STRSpost:   '1'
+  - String:          "\n"
+  - String:          SUBSXri
+  - String:          ': '
+  - INST_SUBSXri:    '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 10, Column: 1 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          RET
+  - String:          ': '
+  - INST_RET:        '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionCount
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 8, Column: 0 }
+Function:        _Z14strided_gatheriPKfiPf
+Args:
+  - NumInstructions: '53'
+  - String:          ' instructions in function'
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+Function:        main
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          LDRXui
+  - String:          ': '
+  - INST_LDRXui:     '4'
+  - String:          "\n"
+  - String:          ADDXri
+  - String:          ': '
+  - INST_ADDXri:     '3'
+  - String:          "\n"
+  - String:          ADRP
+  - String:          ': '
+  - INST_ADRP:       '3'
+  - String:          "\n"
+  - String:          STPXi
+  - String:          ': '
+  - INST_STPXi:      '2'
+  - String:          "\n"
+  - String:          BL
+  - String:          ': '
+  - INST_BL:         '1'
+  - String:          "\n"
+  - String:          Bcc
+  - String:          ': '
+  - INST_Bcc:        '1'
+  - String:          "\n"
+  - String:          LDURXi
+  - String:          ': '
+  - INST_LDURXi:     '1'
+  - String:          "\n"
+  - String:          MOVZWi
+  - String:          ': '
+  - INST_MOVZWi:     '1'
+  - String:          "\n"
+  - String:          ORRXrs
+  - String:          ': '
+  - INST_ORRXrs:     '1'
+  - String:          "\n"
+  - String:          STURXi
+  - String:          ': '
+  - INST_STURXi:     '1'
+  - String:          "\n"
+  - String:          SUBSXrs
+  - String:          ': '
+  - INST_SUBSXrs:    '1'
+  - String:          "\n"
+  - String:          SUBXri
+  - String:          ': '
+  - INST_SUBXri:     '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 17, Column: 3 }
+Function:        main
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          LDPXi
+  - String:          ': '
+  - INST_LDPXi:      '2'
+  - String:          "\n"
+  - String:          ADDXri
+  - String:          ': '
+  - INST_ADDXri:     '1'
+  - String:          "\n"
+  - String:          ORRXrs
+  - String:          ': '
+  - INST_ORRXrs:     '1'
+  - String:          "\n"
+  - String:          RET
+  - String:          ': '
+  - INST_RET:        '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionMix
+Function:        main
+Args:
+  - String:          'BasicBlock: '
+  - BasicBlock:      ''
+  - String:          "\n"
+  - String:          BL
+  - String:          ': '
+  - INST_BL:         '1'
+  - String:          "\n"
+...
+--- !Analysis
+Pass:            asm-printer
+Name:            InstructionCount
+DebugLoc:        { File: '/tmp/katest/fix.cpp', Line: 11, Column: 0 }
+Function:        main
+Args:
+  - NumInstructions: '26'
+  - String:          ' instructions in function'
+...

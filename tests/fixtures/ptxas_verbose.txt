@@ -1,0 +1,8 @@
+ptxas info    : Compiling entry function '_Z11sgemm_kernelPKfS0_Pfii' for 'sm_80'
+ptxas info    : Function properties for _Z11sgemm_kernelPKfS0_Pfii
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 64 registers, 16384 bytes smem, 320 bytes cmem[0]
+ptxas info    : Compiling entry function '_Z11sgemm_spillPKfS0_Pfii' for 'sm_80'
+ptxas info    : Function properties for _Z11sgemm_spillPKfS0_Pfii
+    48 bytes stack frame, 96 bytes spill stores, 128 bytes spill loads
+ptxas info    : Used 255 registers, 49152 bytes smem, 320 bytes cmem[0]

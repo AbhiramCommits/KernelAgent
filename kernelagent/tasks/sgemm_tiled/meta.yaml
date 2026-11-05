@@ -1,0 +1,24 @@
+name: sgemm_tiled
+description: Dense single-precision matrix multiply C = A @ B, row-major.
+character: compute-bound
+kernel: kernel.cpp
+shapes:
+  small: {M: 256, N: 256, K: 256}
+  large: {M: 1024, N: 1024, K: 1024}
+knobs:
+  TILE_M: {kind: int, values: [8, 16, 32, 64], doc: rows per block}
+  TILE_N: {kind: int, values: [8, 16, 32, 64], doc: columns per block}
+  TILE_K: {kind: int, values: [8, 16, 32], doc: reduction depth per block}
+  LOOP_ORDER: {kind: enum, values: [0, 1, 2], doc: 0=i-j-k dot, 1=i-k-j axpy, 2=blocked}
+  UNROLL: {kind: int, values: [1, 2, 4], doc: inner-loop unroll factor}
+  USE_RESTRICT: {kind: int, values: [0, 1], doc: restrict-qualify the operands}
+  PRAGMA_VECTORIZE: {kind: int, values: [0, 1], doc: force the vectoriser on the inner loop}
+default: {TILE_M: 16, TILE_N: 16, TILE_K: 16, LOOP_ORDER: 2, UNROLL: 2, USE_RESTRICT: 1, PRAGMA_VECTORIZE: 0}
+flops: "2*M*N*K"
+bytes: "4*(M*K + K*N + M*N)"
+rtol: 0.002
+atol: 0.002
+output: {shape: [M, N], dtype: float32}
+notes:
+  inputs: [a.bin, b.bin]
+  output: out.bin
