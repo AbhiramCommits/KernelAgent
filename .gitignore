@@ -1,0 +1,14 @@
+.venv/
+.kacache/
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+*.o
+*.dSYM/
+compile_commands.json
