@@ -17,6 +17,66 @@ import numpy as np
 from ..types import KernelTask, Shape
 
 
+def _torch_reference(task_name: str, dims: dict[str, int], dump_dir: Path) -> float | None:
+    """Time an equivalent PyTorch operation when torch is installed."""
+    try:
+        import torch
+    except ImportError:
+        return None
+    try:
+        if task_name == "sgemm_tiled":
+            a = torch.from_numpy(_load(dump_dir, "a.bin", np.float32).reshape(dims["M"], dims["K"]))
+            b = torch.from_numpy(_load(dump_dir, "b.bin", np.float32).reshape(dims["K"], dims["N"]))
+            return _median_ms(lambda: torch.matmul(a, b))
+        if task_name == "conv1d_direct":
+            x = torch.from_numpy(
+                _load(dump_dir, "x.bin", np.float32).reshape(1, dims["C_IN"], dims["L"])
+            )
+            w = torch.from_numpy(
+                _load(dump_dir, "w.bin", np.float32).reshape(
+                    dims["C_OUT"], dims["C_IN"], dims["K"]
+                )
+            )
+            return _median_ms(lambda: torch.nn.functional.conv1d(x, w))
+        if task_name == "softmax_rows":
+            x = torch.from_numpy(
+                _load(dump_dir, "x.bin", np.float32).reshape(dims["ROWS"], dims["COLS"])
+            )
+            return _median_ms(lambda: torch.softmax(x, dim=1))
+        if task_name == "layernorm_fwd":
+            x = torch.from_numpy(
+                _load(dump_dir, "x.bin", np.float32).reshape(dims["ROWS"], dims["COLS"])
+            )
+            gamma = torch.from_numpy(1.0 + 0.1 * _load(dump_dir, "gamma.bin", np.float32))
+            beta = torch.from_numpy(0.05 * _load(dump_dir, "beta.bin", np.float32))
+            return _median_ms(
+                lambda: torch.nn.functional.layer_norm(
+                    x, [dims["COLS"]], gamma, beta, 1e-5
+                )
+            )
+        if task_name == "transpose_blocked":
+            x = torch.from_numpy(
+                _load(dump_dir, "x.bin", np.float32).reshape(dims["M"], dims["N"])
+            )
+            return _median_ms(lambda: x.T.contiguous())
+        if task_name == "reduce_sum":
+            x = torch.from_numpy(
+                _load(dump_dir, "x.bin", np.float32).reshape(dims["M"], dims["N"])
+            )
+            return _median_ms(lambda: x.sum(dim=1))
+        if task_name == "bias_relu_fused":
+            x = torch.from_numpy(
+                _load(dump_dir, "x.bin", np.float32).reshape(dims["ROWS"], dims["COLS"])
+            )
+            bias = torch.from_numpy(
+                _load(dump_dir, "bias.bin", np.float32).reshape(dims["ROWS"], 1)
+            )
+            return _median_ms(lambda: torch.relu(x + bias))
+    except Exception:
+        return None
+    return None
+
+
 def _median_ms(fn: Callable[[], Any], reps: int = 3) -> float:
     fn()
     times = []
@@ -37,9 +97,15 @@ def library_reference(task: KernelTask, shape: Shape, dump_dir: Path) -> dict[st
     Returns ``None`` when a task has no library analogue.
     """
     try:
-        return _build(task.name, shape, dump_dir)
+        result = _build(task.name, shape, dump_dir)
     except (OSError, ValueError, MemoryError):
         return None
+    if result is not None:
+        torch_ms = _torch_reference(task.name, dict(shape.dims), dump_dir)
+        if torch_ms is not None:
+            result["torch_ms"] = torch_ms
+            result["torch_name"] = "torch"
+    return result
 
 
 def _build(task_name: str, shape: Shape, dump_dir: Path) -> dict[str, Any] | None:

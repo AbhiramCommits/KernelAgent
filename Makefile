@@ -11,7 +11,7 @@ setup: .venv/bin/python
 	python3.11 -m venv .venv
 
 lint:
-	.venv/bin/ruff check kernelagent tests experiments
+	.venv/bin/ruff check kernelagent tests experiments scripts
 	.venv/bin/mypy kernelagent
 
 test:
@@ -21,13 +21,14 @@ smoke:
 	.venv/bin/python scripts/smoke.py
 
 experiments:
-	.venv/bin/python -m experiments.exp01_strategies
-	.venv/bin/python -m experiments.exp02_ablation
-	.venv/bin/python -m experiments.exp03_cost_model
-	.venv/bin/python -m experiments.exp04_reliability
+	$(PY) -m experiments.exp01_strategies
+	$(PY) -m experiments.exp02_ablation
+	$(PY) -m experiments.exp03_cost_model
+	$(PY) -m experiments.exp04_reliability
+	$(PY) -c "from experiments.common import assemble_summary; assemble_summary()"
 
 report:
-	.venv/bin/kernelagent report
+	$(PY) -m kernelagent.cli report
 
 clean:
 	rm -rf .kacache build dist .pytest_cache .mypy_cache .ruff_cache

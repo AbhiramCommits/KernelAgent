@@ -1,0 +1,519 @@
+{
+  "budget": 6,
+  "compile_failures": {
+    "exp01_failed_builds": 0,
+    "exp01_trials": 1920,
+    "failed_build_rate": 0.0,
+    "fault_injection": {
+      "compile_time_s": 0.016738,
+      "error": "exit 1",
+      "has_compile_errors": true,
+      "ok": false,
+      "stderr_lines": 11
+    }
+  },
+  "environment": {
+    "cache_bytes": {
+      "l1": 65536,
+      "l2": 4194304
+    },
+    "compiler": "clang++",
+    "compiler_path": "/usr/bin/clang++",
+    "compiler_version": "Apple clang version 21.0.0 (clang-2100.4.1.1)",
+    "cores": 8,
+    "cpu_model": "Apple M3",
+    "cuda_visible": "",
+    "has_ncu": false,
+    "has_nvcc": false,
+    "has_torch": false,
+    "has_triton": false,
+    "llm_provider": null,
+    "machine": "arm64",
+    "memory_bytes": 17179869184,
+    "nvcc_version": "",
+    "os": "macOS-27.2-arm64-arm-64bit",
+    "python": "3.11.14",
+    "system": "Darwin"
+  },
+  "exp01_trials": 1920,
+  "experiment": "exp04_reliability",
+  "generated_at": "2026-11-05T07:57:50.191972+00:00",
+  "git_sha": "714f878",
+  "measurement_noise": {
+    "available": true,
+    "count": 1920,
+    "max": 0.2418991204099584,
+    "median_mad_over_median": 0.008422419887569062,
+    "over_rerun_threshold": 2,
+    "p90": 0.04079815154081867,
+    "p99": 0.10210861925103122
+  },
+  "notes": "Timeout/retry counts come from a deliberate sleep probe; compile failures are counted over exp01 and a deliberate syntax error; rerun variance repeats the same strategy, seed and budget twice.",
+  "repair": {
+    "probes": 3,
+    "repair_attempts": 3,
+    "runs": [
+      {
+        "best": 1.0011692735769853,
+        "repairs": 1
+      },
+      {
+        "best": 0.9788756582642522,
+        "repairs": 1
+      },
+      {
+        "best": 0.9988611110351853,
+        "repairs": 1
+      }
+    ],
+    "successes": 3
+  },
+  "rerun_variance": {
+    "budget": 6,
+    "geomean_abs_delta_pct": 1.4312164110410877,
+    "passes": [
+      {
+        "geomean_speedup": 1.7569741425649734,
+        "pass": 1,
+        "per_problem": [
+          {
+            "shape": "small",
+            "speedup": 2.042094089744334,
+            "task": "sgemm_tiled",
+            "trials_to_best": null
+          },
+          {
+            "shape": "large",
+            "speedup": 3.929522430552731,
+            "task": "reduce_sum",
+            "trials_to_best": null
+          },
+          {
+            "shape": "large",
+            "speedup": 1.1275408019772446,
+            "task": "conv1d_direct",
+            "trials_to_best": null
+          },
+          {
+            "shape": "small",
+            "speedup": 1.0532068935071768,
+            "task": "transpose_blocked",
+            "trials_to_best": null
+          }
+        ]
+      },
+      {
+        "geomean_speedup": 1.7821202448311118,
+        "pass": 2,
+        "per_problem": [
+          {
+            "shape": "small",
+            "speedup": 2.065369328824693,
+            "task": "sgemm_tiled",
+            "trials_to_best": null
+          },
+          {
+            "shape": "large",
+            "speedup": 3.924680070987372,
+            "task": "reduce_sum",
+            "trials_to_best": null
+          },
+          {
+            "shape": "large",
+            "speedup": 1.1666666666666665,
+            "task": "conv1d_direct",
+            "trials_to_best": null
+          },
+          {
+            "shape": "small",
+            "speedup": 1.0665942600256633,
+            "task": "transpose_blocked",
+            "trials_to_best": null
+          }
+        ]
+      }
+    ],
+    "per_problem_abs_delta_pct_mean": 1.5010315160819399,
+    "runs": [
+      {
+        "best_speedup": 2.042094089744334,
+        "best_variant": {
+          "cflags": [],
+          "knobs": {
+            "LOOP_ORDER": 1,
+            "PRAGMA_VECTORIZE": 0,
+            "TILE_K": 16,
+            "TILE_M": 64,
+            "TILE_N": 16,
+            "UNROLL": 2,
+            "USE_RESTRICT": 1
+          },
+          "provenance": "mutation:increase-TILE_M"
+        },
+        "budget": 6,
+        "compile_time_s": 0,
+        "compiled": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "compiles": 0,
+        "confirmation_spread_pct": null,
+        "confirmed_speedup": null,
+        "repair_attempts": 0,
+        "seed": 0,
+        "shape": "K=256,M=256,N=256",
+        "solved": true,
+        "speedups": [
+          1.0378068136795722,
+          1.0289562891539172,
+          2.0336741227111252,
+          2.0165577243489916,
+          2.042094089744334,
+          2.035578771375252
+        ],
+        "stop_reason": "budget",
+        "strategy": "mutation",
+        "task": "sgemm_tiled",
+        "tokens": 0,
+        "trials": 6,
+        "trials_to_best": 5,
+        "wall_s": 0.5496232919977047
+      },
+      {
+        "best_speedup": 3.929522430552731,
+        "best_variant": {
+          "cflags": [],
+          "knobs": {
+            "ACCUMULATORS": 4,
+            "PRAGMA_VECTORIZE": 1,
+            "UNROLL": 8,
+            "USE_RESTRICT": 1
+          },
+          "provenance": "mutation:ilp-UNROLL"
+        },
+        "budget": 6,
+        "compile_time_s": 0,
+        "compiled": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "compiles": 0,
+        "confirmation_spread_pct": null,
+        "confirmed_speedup": null,
+        "repair_attempts": 0,
+        "seed": 0,
+        "shape": "M=2048,N=16384",
+        "solved": true,
+        "speedups": [
+          1.965760605505707,
+          1.9659806078118163,
+          3.926514337612403,
+          3.929522430552731,
+          3.917942778334149,
+          3.8920848389630796
+        ],
+        "stop_reason": "budget",
+        "strategy": "mutation",
+        "task": "reduce_sum",
+        "tokens": 0,
+        "trials": 6,
+        "trials_to_best": 4,
+        "wall_s": 1.459160124999471
+      },
+      {
+        "best_speedup": 1.1275408019772446,
+        "best_variant": {
+          "cflags": [],
+          "knobs": {
+            "BLOCK_L": 128,
+            "LOOP_ORDER": 1,
+            "PRAGMA_VECTORIZE": 1,
+            "UNROLL": 2,
+            "USE_RESTRICT": 1
+          },
+          "provenance": "mutation:vectorize-pragma"
+        },
+        "budget": 6,
+        "compile_time_s": 0,
+        "compiled": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "compiles": 0,
+        "confirmation_spread_pct": null,
+        "confirmed_speedup": null,
+        "repair_attempts": 0,
+        "seed": 0,
+        "shape": "C_IN=4,C_OUT=2,K=3,L=4194304",
+        "solved": true,
+        "speedups": [
+          1.1227670670803482,
+          1.1275408019772446,
+          1.0995221275711615,
+          0.2614667566988916,
+          0.7367486592993533,
+          0.8649540242830448
+        ],
+        "stop_reason": "budget",
+        "strategy": "mutation",
+        "task": "conv1d_direct",
+        "tokens": 0,
+        "trials": 6,
+        "trials_to_best": 2,
+        "wall_s": 2.075381250004284
+      },
+      {
+        "best_speedup": 1.0532068935071768,
+        "best_variant": {
+          "cflags": [],
+          "knobs": {
+            "BLOCK": 16,
+            "PAD": 0,
+            "PRAGMA_VECTORIZE": 1,
+            "USE_RESTRICT": 1
+          },
+          "provenance": "mutation:vectorize-pragma"
+        },
+        "budget": 6,
+        "compile_time_s": 0,
+        "compiled": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "compiles": 0,
+        "confirmation_spread_pct": null,
+        "confirmed_speedup": null,
+        "repair_attempts": 0,
+        "seed": 0,
+        "shape": "M=1024,N=1024",
+        "solved": true,
+        "speedups": [
+          0.8220728719530352,
+          0.82024339963203,
+          0.506410934537936,
+          0.810313885513931,
+          1.0094761929399432,
+          1.0532068935071768
+        ],
+        "stop_reason": "budget",
+        "strategy": "mutation",
+        "task": "transpose_blocked",
+        "tokens": 0,
+        "trials": 6,
+        "trials_to_best": 6,
+        "wall_s": 0.41571504100284074
+      },
+      {
+        "best_speedup": 2.065369328824693,
+        "best_variant": {
+          "cflags": [],
+          "knobs": {
+            "LOOP_ORDER": 1,
+            "PRAGMA_VECTORIZE": 1,
+            "TILE_K": 16,
+            "TILE_M": 32,
+            "TILE_N": 32,
+            "UNROLL": 2,
+            "USE_RESTRICT": 1
+          },
+          "provenance": "mutation:increase-TILE_N"
+        },
+        "budget": 6,
+        "compile_time_s": 0,
+        "compiled": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "compiles": 0,
+        "confirmation_spread_pct": null,
+        "confirmed_speedup": null,
+        "repair_attempts": 0,
+        "seed": 0,
+        "shape": "K=256,M=256,N=256",
+        "solved": true,
+        "speedups": [
+          1.0178386903790722,
+          1.0315714324770768,
+          2.0494367374721016,
+          2.0432091205134455,
+          2.065369328824693,
+          2.058151268784548
+        ],
+        "stop_reason": "budget",
+        "strategy": "mutation",
+        "task": "sgemm_tiled",
+        "tokens": 0,
+        "trials": 6,
+        "trials_to_best": 5,
+        "wall_s": 0.5411476660010521
+      },
+      {
+        "best_speedup": 3.924680070987372,
+        "best_variant": {
+          "cflags": [],
+          "knobs": {
+            "ACCUMULATORS": 4,
+            "PRAGMA_VECTORIZE": 1,
+            "UNROLL": 1,
+            "USE_RESTRICT": 1
+          },
+          "provenance": "mutation:sweep"
+        },
+        "budget": 6,
+        "compile_time_s": 0,
+        "compiled": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "compiles": 0,
+        "confirmation_spread_pct": null,
+        "confirmed_speedup": null,
+        "repair_attempts": 0,
+        "seed": 0,
+        "shape": "M=2048,N=16384",
+        "solved": true,
+        "speedups": [
+          1.9602434150828045,
+          1.9735370215822845,
+          3.918366711278744,
+          3.849465080075428,
+          3.924680070987372,
+          3.9221843867981976
+        ],
+        "stop_reason": "budget",
+        "strategy": "mutation",
+        "task": "reduce_sum",
+        "tokens": 0,
+        "trials": 6,
+        "trials_to_best": 5,
+        "wall_s": 1.421419958001934
+      },
+      {
+        "best_speedup": 1.1666666666666665,
+        "best_variant": {
+          "cflags": [],
+          "knobs": {
+            "BLOCK_L": 128,
+            "LOOP_ORDER": 1,
+            "PRAGMA_VECTORIZE": 0,
+            "UNROLL": 2,
+            "USE_RESTRICT": 1
+          },
+          "provenance": "mutation:increase-BLOCK_L"
+        },
+        "budget": 6,
+        "compile_time_s": 0,
+        "compiled": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "compiles": 0,
+        "confirmation_spread_pct": null,
+        "confirmed_speedup": null,
+        "repair_attempts": 0,
+        "seed": 0,
+        "shape": "C_IN=4,C_OUT=2,K=3,L=4194304",
+        "solved": true,
+        "speedups": [
+          1.1666666666666665,
+          1.1658613231120638,
+          1.1411402777378454,
+          0.2606066376228262,
+          0.7391818528899607,
+          0.8689687134481413
+        ],
+        "stop_reason": "budget",
+        "strategy": "mutation",
+        "task": "conv1d_direct",
+        "tokens": 0,
+        "trials": 6,
+        "trials_to_best": 1,
+        "wall_s": 2.0463649590019486
+      },
+      {
+        "best_speedup": 1.0665942600256633,
+        "best_variant": {
+          "cflags": [],
+          "knobs": {
+            "BLOCK": 16,
+            "PAD": 0,
+            "PRAGMA_VECTORIZE": 1,
+            "USE_RESTRICT": 1
+          },
+          "provenance": "mutation:sweep"
+        },
+        "budget": 6,
+        "compile_time_s": 0,
+        "compiled": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "compiles": 0,
+        "confirmation_spread_pct": null,
+        "confirmed_speedup": null,
+        "repair_attempts": 0,
+        "seed": 0,
+        "shape": "M=1024,N=1024",
+        "solved": true,
+        "speedups": [
+          0.8236131458454173,
+          0.8451468206520394,
+          0.49253371211880465,
+          0.36412256709203217,
+          1.0665942600256633,
+          0.9957161849687565
+        ],
+        "stop_reason": "budget",
+        "strategy": "mutation",
+        "task": "transpose_blocked",
+        "tokens": 0,
+        "trials": 6,
+        "trials_to_best": 5,
+        "wall_s": 0.4550578749986016
+      }
+    ],
+    "seed": 0
+  },
+  "seeds": [
+    0
+  ],
+  "tool_layer": {
+    "attempts": 9,
+    "max_duration_s": 0.21222183400095673,
+    "mean_duration_s": 0.21015851433185162,
+    "probe_runs": 3,
+    "timeouts": 3
+  }
+}

@@ -105,6 +105,29 @@ def _group_metrics(
     return metrics
 
 
+def collect_loto_predictions(dataset_path: str | Path | None = None) -> list[dict[str, Any]]:
+    """Out-of-fold cost-model predictions for a predicted-vs-actual plot."""
+    records = load_dataset(dataset_path)
+    predictions: list[dict[str, Any]] = []
+    for held_out, train_records, test_records in loto_folds(records):
+        x_train, y_train, _ = _matrix(train_records)
+        x_test, y_test, test_groups = _matrix(test_records)
+        if len(y_train) < 4 or len(y_test) == 0:
+            continue
+        model = CostModel().fit(x_train, y_train)
+        predicted = model.predict(x_test)
+        for index, value in enumerate(y_test):
+            predictions.append(
+                {
+                    "task": held_out,
+                    "group": test_groups[index],
+                    "actual": float(value),
+                    "predicted": float(predicted[index]),
+                }
+            )
+    return predictions
+
+
 def run_loto_evaluation(dataset_path: str | Path | None = None) -> dict[str, Any]:
     """Fit on all-but-one task, rank the held-out task's measured pool."""
     records = load_dataset(dataset_path)

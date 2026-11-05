@@ -61,6 +61,7 @@ def _row(task, shape_name, shape, trial: Trial, library: dict[str, Any] | None) 
         "library_ms": library_ms,
         "library_name": library["name"] if library else None,
         "library_speedup": (library_ms / run.ms_median) if (library_ms and run) else None,
+        "torch_ms": library.get("torch_ms") if library else None,
         "error": trial.error,
     }
 

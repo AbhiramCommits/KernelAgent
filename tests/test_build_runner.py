@@ -12,13 +12,15 @@ from kernelagent.types import Shape
 def test_build_run_check_sgemm() -> None:
     task = load_tasks()["sgemm_tiled"]
     variant = task.default_variant()
-    build = CxxBuilder().build(task, variant)
+    builder = CxxBuilder()
+    build = builder.build(task, variant)
     assert build.ok, build.raw_stderr
     assert build.compile_time_s > 0.0
     assert build.binary is not None
     diagnostics = build.diagnostics
-    assert diagnostics["vectorized_loops"] >= 1
-    assert diagnostics["source"] == "opt-record"
+    if builder.is_clang:
+        assert diagnostics["vectorized_loops"] >= 1
+        assert diagnostics["source"] == "opt-record"
 
     shape = Shape(dims={"M": 128, "N": 128, "K": 128})
     runner = BenchRunner()

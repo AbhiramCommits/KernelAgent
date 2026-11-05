@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import functools
 import json
 import shutil
 import time
@@ -55,6 +56,7 @@ def find_compiler(preferred: str | None = None) -> str:
     raise FileNotFoundError("no C++ compiler found (looked for clang++, g++)")
 
 
+@functools.lru_cache(maxsize=8)
 def compiler_version(compiler: str) -> str:
     """Version banner of the compiler, used in cache keys and the ledger."""
     result = run_subprocess([compiler, "--version"], timeout_s=10, retries=0)

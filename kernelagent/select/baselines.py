@@ -7,7 +7,7 @@ from typing import Any
 
 from .. import config
 from ..agent.loop import run_search
-from ..eval.harness import evaluate_variant
+from ..eval.harness import confirm_best, evaluate_variant
 from ..ledger import TrialLedger
 from ..tasks.registry import enumerate_variants
 from ..types import KernelTask, SearchRun, Shape, Trial
@@ -60,12 +60,15 @@ def run_oracle(
         key=lambda trial: trial.speedup or 0.0,
         default=None,
     )
+    confirmation = confirm_best(best, repeats=3) if best is not None else None
     return {
         "task": task.name,
         "shape": shape.key(),
         "variants": len(trials),
         "best": best,
-        "oracle_speedup": best.speedup if best else None,
+        "oracle_speedup": confirmation.speedup if confirmation else (best.speedup if best else None),
+        "oracle_raw_speedup": best.speedup if best else None,
+        "oracle_spread_pct": confirmation.spread_pct if confirmation else None,
         "wall_s": time.perf_counter() - started,
     }
 
