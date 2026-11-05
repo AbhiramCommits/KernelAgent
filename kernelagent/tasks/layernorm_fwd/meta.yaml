@@ -1,0 +1,22 @@
+name: layernorm_fwd
+description: Row-wise layer normalisation with per-channel affine transform.
+character: memory-bound
+kernel: kernel.cpp
+shapes:
+  small: {ROWS: 1024, COLS: 512}
+  large: {ROWS: 256, COLS: 16384}
+knobs:
+  UNROLL: {kind: int, values: [1, 2, 4], doc: pass-loop unroll factor}
+  TWO_PASS: {kind: int, values: [0, 1], doc: 1=mean and variance in one pass, 0=separate passes}
+  ACCUMULATORS: {kind: int, values: [1, 2, 4], doc: independent reduction accumulators}
+  USE_RESTRICT: {kind: int, values: [0, 1], doc: restrict-qualify operands}
+  PRAGMA_VECTORIZE: {kind: int, values: [0, 1], doc: request vectorisation}
+default: {UNROLL: 2, TWO_PASS: 0, ACCUMULATORS: 1, USE_RESTRICT: 1, PRAGMA_VECTORIZE: 0}
+flops: "8*ROWS*COLS"
+bytes: "4*(2*ROWS*COLS + 2*COLS)"
+rtol: 0.001
+atol: 0.001
+output: {shape: [ROWS, COLS], dtype: float32}
+notes:
+  inputs: [x.bin, gamma.bin, beta.bin]
+  output: out.bin

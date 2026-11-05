@@ -215,6 +215,23 @@ class SearchRun(BaseModel):
     stop_reason: str = ""
 
 
+class Confirmation(BaseModel):
+    """Re-measurement of a winning trial, to avoid reporting a lucky sample."""
+
+    task: str
+    shape: Shape
+    variant: KernelVariant
+    ms_median: float
+    ms_min: float
+    ms_max: float
+    spread_pct: float
+    baseline_ms: float
+    speedup: float
+    repeats: int
+    noise_ratios: list[float] = Field(default_factory=list)
+    check_passed: bool = True
+
+
 class ToolError(BaseModel):
     """Structured error returned by the tool layer instead of raw stderr."""
 

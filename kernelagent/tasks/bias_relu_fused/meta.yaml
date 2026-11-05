@@ -1,0 +1,21 @@
+name: bias_relu_fused
+description: Fused per-row bias add and ReLU over a dense float32 matrix.
+character: memory-bound
+kernel: kernel.cpp
+shapes:
+  small: {ROWS: 1024, COLS: 1024}
+  large: {ROWS: 4096, COLS: 4096}
+knobs:
+  UNROLL: {kind: int, values: [1, 2, 4, 8], doc: inner-loop unroll factor}
+  BLOCK: {kind: int, values: [1024, 4096, 16384], doc: elements per cache block}
+  USE_RESTRICT: {kind: int, values: [0, 1], doc: restrict-qualify operands}
+  PRAGMA_VECTORIZE: {kind: int, values: [0, 1], doc: request vectorisation}
+default: {UNROLL: 2, BLOCK: 4096, USE_RESTRICT: 1, PRAGMA_VECTORIZE: 0}
+flops: "2*ROWS*COLS"
+bytes: "4*(2*ROWS*COLS + ROWS)"
+rtol: 0.0
+atol: 0.0
+output: {shape: [ROWS, COLS], dtype: float32}
+notes:
+  inputs: [x.bin, bias.bin]
+  output: out.bin

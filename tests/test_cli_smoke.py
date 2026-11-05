@@ -19,6 +19,7 @@ def test_doctor_exits_zero() -> None:
 def test_tasks_exits_zero() -> None:
     result = runner.invoke(app, ["tasks"])
     assert result.exit_code == 0, result.output
+    assert "sgemm_tiled" in result.output
 
 
 def test_version_exits_zero() -> None:

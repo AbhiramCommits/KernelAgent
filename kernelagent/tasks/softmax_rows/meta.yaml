@@ -1,0 +1,21 @@
+name: softmax_rows
+description: Row-wise numerically stable softmax over a dense float32 matrix.
+character: memory-bound
+kernel: kernel.cpp
+shapes:
+  small: {ROWS: 512, COLS: 1024}
+  large: {ROWS: 256, COLS: 32768}
+knobs:
+  UNROLL: {kind: int, values: [1, 2, 4, 8], doc: row-loop unroll factor}
+  TWO_PASS: {kind: int, values: [0, 1], doc: 1=online max/sum then normalise, 0=three passes}
+  USE_RESTRICT: {kind: int, values: [0, 1], doc: restrict-qualify operands}
+  PRAGMA_VECTORIZE: {kind: int, values: [0, 1], doc: request vectorisation}
+default: {UNROLL: 2, TWO_PASS: 0, USE_RESTRICT: 1, PRAGMA_VECTORIZE: 0}
+flops: "5*ROWS*COLS"
+bytes: "8*ROWS*COLS"
+rtol: 0.001
+atol: 0.001
+output: {shape: [ROWS, COLS], dtype: float32}
+notes:
+  inputs: [x.bin]
+  output: out.bin

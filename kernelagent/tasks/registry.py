@@ -45,7 +45,7 @@ def load_tasks(root: Path | None = None) -> dict[str, KernelTask]:
             rtol=float(raw.get("rtol", 1e-4)),
             atol=float(raw.get("atol", 1e-4)),
             kernel_file=raw.get("kernel", "kernel.cpp"),
-            notes=raw.get("notes", {}),
+            notes={**raw.get("notes", {}), "character": raw.get("character", "")},
         )
         validate_task(task)
         if task.name in tasks:

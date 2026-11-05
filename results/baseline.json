@@ -1,0 +1,604 @@
+{
+  "budget": 16,
+  "builds": 16,
+  "compile_time_total_s": 0,
+  "environment": {
+    "cache_bytes": {
+      "l1": 65536,
+      "l2": 4194304
+    },
+    "compiler": "clang++",
+    "compiler_path": "/usr/bin/clang++",
+    "compiler_version": "Apple clang version 21.0.0 (clang-2100.4.1.1)",
+    "cores": 8,
+    "cpu_model": "Apple M3",
+    "cuda_visible": "",
+    "has_ncu": false,
+    "has_nvcc": false,
+    "has_torch": false,
+    "has_triton": false,
+    "llm_provider": null,
+    "machine": "arm64",
+    "memory_bytes": 17179869184,
+    "nvcc_version": "",
+    "os": "macOS-27.2-arm64-arm-64bit",
+    "python": "3.11.14",
+    "system": "Darwin"
+  },
+  "generated_at": "2026-11-05T07:14:57.472414+00:00",
+  "geomean_speedup": 0.9930429777889859,
+  "git_sha": "6fe132a",
+  "library_geomean_speedup": 0.5838810098327216,
+  "problems": 16,
+  "rows": [
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.533436,
+      "error": null,
+      "gbps": 118.52976298343603,
+      "gflops": 29.617978842127503,
+      "library_ms": 0.3882080054609105,
+      "library_name": "numpy bias+relu",
+      "library_speedup": 5.4826433620861845,
+      "ms_mad": 0.00121644431,
+      "ms_median": 0.0708067222,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "small",
+      "shape_dims": {
+        "COLS": 1024,
+        "ROWS": 1024
+      },
+      "speedup": 1.011245990144139,
+      "task": "bias_relu_fused",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "BLOCK": 4096,
+          "PRAGMA_VECTORIZE": 0,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.533436,
+      "error": null,
+      "gbps": 75.3912451558551,
+      "gflops": 18.84551081156978,
+      "library_ms": 7.163792004575953,
+      "library_name": "numpy bias+relu",
+      "library_speedup": 4.023472060980597,
+      "ms_mad": 0.0164583301,
+      "ms_median": 1.7805,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "large",
+      "shape_dims": {
+        "COLS": 4096,
+        "ROWS": 4096
+      },
+      "speedup": 0.8730457736590845,
+      "task": "bias_relu_fused",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "BLOCK": 4096,
+          "PRAGMA_VECTORIZE": 0,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.503069,
+      "error": null,
+      "gbps": 1.9496749752671352,
+      "gflops": 25.644373548558715,
+      "library_ms": 0.0315000070258975,
+      "library_name": "numpy einsum conv1d",
+      "library_speedup": 0.30875349611451947,
+      "ms_mad": 9.65556533e-05,
+      "ms_median": 0.102023159,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "small",
+      "shape_dims": {
+        "C_IN": 8,
+        "C_OUT": 16,
+        "K": 5,
+        "L": 2048
+      },
+      "speedup": 0.9955464523500983,
+      "task": "conv1d_direct",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "BLOCK_L": 64,
+          "LOOP_ORDER": 1,
+          "PRAGMA_VECTORIZE": 0,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.503069,
+      "error": null,
+      "gbps": 10.498572217033024,
+      "gflops": 20.997117734837445,
+      "library_ms": 12.34554099937668,
+      "library_name": "numpy einsum conv1d",
+      "library_speedup": 1.287564145874644,
+      "ms_mad": 0.0204580065,
+      "ms_median": 9.588292,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "large",
+      "shape_dims": {
+        "C_IN": 4,
+        "C_OUT": 2,
+        "K": 3,
+        "L": 4194304
+      },
+      "speedup": 1.0025159851201861,
+      "task": "conv1d_direct",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "BLOCK_L": 64,
+          "LOOP_ORDER": 1,
+          "PRAGMA_VECTORIZE": 0,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.472024,
+      "error": null,
+      "gbps": 5.622700267009559,
+      "gflops": 5.617214705773453,
+      "library_ms": 0.5214159973547794,
+      "library_name": "numpy layernorm",
+      "library_speedup": 0.6983055134217259,
+      "ms_mad": 0.000281249413,
+      "ms_median": 0.746687499,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "small",
+      "shape_dims": {
+        "COLS": 512,
+        "ROWS": 1024
+      },
+      "speedup": 1.000995136520961,
+      "task": "layernorm_fwd",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "ACCUMULATORS": 1,
+          "PRAGMA_VECTORIZE": 0,
+          "TWO_PASS": 0,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.472024,
+      "error": null,
+      "gbps": 5.416801046133697,
+      "gflops": 5.395723999261582,
+      "library_ms": 4.1222079962608404,
+      "library_name": "numpy layernorm",
+      "library_speedup": 0.662872094374079,
+      "ms_mad": 0.107583,
+      "ms_median": 6.218708,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "large",
+      "shape_dims": {
+        "COLS": 16384,
+        "ROWS": 256
+      },
+      "speedup": 1.0878130955819119,
+      "task": "layernorm_fwd",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "ACCUMULATORS": 1,
+          "PRAGMA_VECTORIZE": 0,
+          "TWO_PASS": 0,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.455656,
+      "error": null,
+      "gbps": 6.977224959371716,
+      "gflops": 1.7426044776577163,
+      "library_ms": 0.11820800136774778,
+      "library_name": "numpy sum(axis=1)",
+      "library_speedup": 0.19644717452850982,
+      "ms_mad": 0.000179099152,
+      "ms_median": 0.601729201,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "small",
+      "shape_dims": {
+        "M": 1024,
+        "N": 1024
+      },
+      "speedup": 1.0029150970188663,
+      "task": "reduce_sum",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "ACCUMULATORS": 1,
+          "PRAGMA_VECTORIZE": 0,
+          "UNROLL": 4,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.455656,
+      "error": null,
+      "gbps": 6.016199365776589,
+      "gflops": 1.5039580471297471,
+      "library_ms": 4.013625002698973,
+      "library_name": "numpy sum(axis=1)",
+      "library_speedup": 0.17989646258861638,
+      "ms_mad": 0.00520799949,
+      "ms_median": 22.31075,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "large",
+      "shape_dims": {
+        "M": 2048,
+        "N": 16384
+      },
+      "speedup": 1.0003734970810036,
+      "task": "reduce_sum",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "ACCUMULATORS": 1,
+          "PRAGMA_VECTORIZE": 0,
+          "UNROLL": 4,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.584153,
+      "error": null,
+      "gbps": 0.34602448824426996,
+      "gflops": 14.763711498422186,
+      "library_ms": 0.025624998670537025,
+      "library_name": "numpy.matmul (BLAS)",
+      "library_speedup": 0.011274817213990113,
+      "ms_mad": 0.0024163334,
+      "ms_median": 2.272764,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "small",
+      "shape_dims": {
+        "K": 256,
+        "M": 256,
+        "N": 256
+      },
+      "speedup": 0.9992238525425429,
+      "task": "sgemm_tiled",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "LOOP_ORDER": 2,
+          "PRAGMA_VECTORIZE": 0,
+          "TILE_K": 16,
+          "TILE_M": 16,
+          "TILE_N": 16,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.584153,
+      "error": null,
+      "gbps": 0.07386024893960084,
+      "gflops": 12.605482485691875,
+      "library_ms": 1.4040419991943054,
+      "library_name": "numpy.matmul (BLAS)",
+      "library_speedup": 0.00824156535324623,
+      "ms_mad": 0.0444999969,
+      "ms_median": 170.361083,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "large",
+      "shape_dims": {
+        "K": 1024,
+        "M": 1024,
+        "N": 1024
+      },
+      "speedup": 0.9739704871446491,
+      "task": "sgemm_tiled",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "LOOP_ORDER": 2,
+          "PRAGMA_VECTORIZE": 0,
+          "TILE_K": 16,
+          "TILE_M": 16,
+          "TILE_N": 16,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.446959,
+      "error": null,
+      "gbps": 3.179872034969082,
+      "gflops": 1.9874200218556761,
+      "library_ms": 0.9077080030692741,
+      "library_name": "numpy softmax",
+      "library_speedup": 0.6881702649301563,
+      "ms_mad": 0.000950199319,
+      "ms_median": 1.3190166,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "small",
+      "shape_dims": {
+        "COLS": 1024,
+        "ROWS": 512
+      },
+      "speedup": 1.0028493955269402,
+      "task": "softmax_rows",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "PRAGMA_VECTORIZE": 0,
+          "TWO_PASS": 0,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.446959,
+      "error": null,
+      "gbps": 3.186915143564386,
+      "gflops": 1.9918219647277413,
+      "library_ms": 14.396083999599796,
+      "library_name": "numpy softmax",
+      "library_speedup": 0.6836518363110652,
+      "ms_mad": 0.00187499973,
+      "ms_median": 21.057625,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "large",
+      "shape_dims": {
+        "COLS": 32768,
+        "ROWS": 256
+      },
+      "speedup": 1.0000949774725307,
+      "task": "softmax_rows",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "PRAGMA_VECTORIZE": 0,
+          "TWO_PASS": 0,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.483107,
+      "error": null,
+      "gbps": 35.478834665543346,
+      "gflops": 7.469208694828349,
+      "library_ms": 0.06125000072643161,
+      "library_name": "scipy.sparse csr_matvec",
+      "library_speedup": 1.4296532437003302,
+      "ms_mad": 2.01408761e-05,
+      "ms_median": 0.0428425571,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "small",
+      "shape_dims": {
+        "M": 20000,
+        "N": 20000,
+        "NNZ": 8
+      },
+      "speedup": 0.9981962537899028,
+      "task": "spmv_csr",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "ACCUMULATORS": 1,
+          "PRAGMA_VECTORIZE": 0,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.483107,
+      "error": null,
+      "gbps": 35.02737431214119,
+      "gflops": 7.37418212513969,
+      "library_ms": 0.6505830024252646,
+      "library_name": "scipy.sparse csr_matvec",
+      "library_speedup": 1.4992242335637807,
+      "ms_mad": 0.000374999737,
+      "ms_median": 0.433946429,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "large",
+      "shape_dims": {
+        "M": 200000,
+        "N": 200000,
+        "NNZ": 8
+      },
+      "speedup": 1.0015842969409479,
+      "task": "spmv_csr",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "ACCUMULATORS": 1,
+          "PRAGMA_VECTORIZE": 0,
+          "UNROLL": 2,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.445444,
+      "error": null,
+      "gbps": 39.77475879884003,
+      "gflops": 0.0,
+      "library_ms": 0.7883330035838298,
+      "library_name": "numpy transpose",
+      "library_speedup": 3.737897285307876,
+      "ms_mad": 0.000366666548,
+      "ms_median": 0.2109028,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "small",
+      "shape_dims": {
+        "M": 1024,
+        "N": 1024
+      },
+      "speedup": 0.9936384580953881,
+      "task": "transpose_blocked",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "BLOCK": 16,
+          "PAD": 0,
+          "PRAGMA_VECTORIZE": 0,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.445444,
+      "error": null,
+      "gbps": 9.422644932483593,
+      "gflops": 0.0,
+      "library_ms": 51.72929100081092,
+      "library_name": "numpy transpose",
+      "library_speedup": 3.6316122242045408,
+      "ms_mad": 0.474416003,
+      "ms_median": 14.244167,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "large",
+      "shape_dims": {
+        "M": 4096,
+        "N": 4096
+      },
+      "speedup": 0.9581027096916234,
+      "task": "transpose_blocked",
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "BLOCK": 16,
+          "PAD": 0,
+          "PRAGMA_VECTORIZE": 0,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "default"
+      }
+    }
+  ],
+  "seeds": [
+    0
+  ],
+  "solve_rate": 0.0625,
+  "strategy": "default",
+  "trials": 16,
+  "wall_s": 12.10147875000257
+}

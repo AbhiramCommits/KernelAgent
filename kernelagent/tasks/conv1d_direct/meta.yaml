@@ -1,0 +1,22 @@
+name: conv1d_direct
+description: Direct valid 1-D convolution with multiple input and output channels.
+character: compute-bound small, memory-bound large
+kernel: kernel.cpp
+shapes:
+  small: {C_IN: 8, C_OUT: 16, L: 2048, K: 5}
+  large: {C_IN: 4, C_OUT: 2, L: 4194304, K: 3}
+knobs:
+  LOOP_ORDER: {kind: enum, values: [0, 1, 2], doc: 0=dot, 1=blocked axpy, 2=unblocked axpy}
+  BLOCK_L: {kind: int, values: [32, 64, 128], doc: output-length block}
+  UNROLL: {kind: int, values: [1, 2, 4, 8], doc: inner-loop unroll factor}
+  USE_RESTRICT: {kind: int, values: [0, 1], doc: restrict-qualify operands}
+  PRAGMA_VECTORIZE: {kind: int, values: [0, 1], doc: request vectorisation}
+default: {LOOP_ORDER: 1, BLOCK_L: 64, UNROLL: 2, USE_RESTRICT: 1, PRAGMA_VECTORIZE: 0}
+flops: "2*C_IN*C_OUT*(L-K+1)*K"
+bytes: "4*(C_IN*L + C_OUT*C_IN*K + C_OUT*(L-K+1))"
+rtol: 0.002
+atol: 0.002
+output: {shape: [C_OUT, L-K+1], dtype: float32}
+notes:
+  inputs: [x.bin, w.bin]
+  output: out.bin

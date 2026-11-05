@@ -87,9 +87,9 @@ def build_cmd(
         console.print(f"[red]unknown task {task}[/red]")
         raise typer.Exit(2)
     kernel_task = loaded[task]
-    chosen = kernel_task.default_variant()
-    if variant != "default":
-        chosen = chosen.model_copy(update={"knobs": json.loads(variant), "provenance": "cli"})
+    from .eval.harness import parse_variant
+
+    chosen = parse_variant(kernel_task, variant)
     result = CxxBuilder().build(kernel_task, chosen)
     if json_out:
         _echo_json(result.model_dump(mode="json"))
@@ -186,7 +186,27 @@ def run_suite(
     if json_out:
         _echo_json(summary)
     else:
-        console.print(f"wrote {out}: {summary['problems']} problems, {summary['trials']} trials")
+        table = Table(show_header=True, header_style="bold")
+        table.add_column("Task")
+        table.add_column("Shape")
+        table.add_column("ms")
+        table.add_column("speedup")
+        table.add_column("library ms")
+        table.add_column("vs library")
+        for row in summary["rows"]:
+            table.add_row(
+                row["task"],
+                row["shape"],
+                f"{row['ms_median']:.4f}" if row["ms_median"] else "-",
+                f"{row['speedup']:.3f}" if row["speedup"] else "-",
+                f"{row['library_ms']:.4f}" if row.get("library_ms") else "-",
+                f"{row['library_speedup']:.3f}" if row.get("library_speedup") else "-",
+            )
+        console.print(table)
+        console.print(
+            f"wrote {out}: {summary['problems']} problems, {summary['trials']} trials, "
+            f"geomean={summary['geomean_speedup']:.3f}x, wall={summary['wall_s']:.1f}s"
+        )
 
 
 @app.command("rank-eval")

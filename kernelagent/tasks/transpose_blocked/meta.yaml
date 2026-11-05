@@ -1,0 +1,21 @@
+name: transpose_blocked
+description: Out-of-place blocked transpose of a dense float32 matrix.
+character: memory-bound
+kernel: kernel.cpp
+shapes:
+  small: {M: 1024, N: 1024}
+  large: {M: 4096, N: 4096}
+knobs:
+  BLOCK: {kind: int, values: [8, 16, 32, 64], doc: square tile edge}
+  USE_RESTRICT: {kind: int, values: [0, 1], doc: restrict-qualify operands}
+  PAD: {kind: int, values: [0, 1], doc: stage tiles through a padded local buffer}
+  PRAGMA_VECTORIZE: {kind: int, values: [0, 1], doc: request vectorisation of the contiguous store}
+default: {BLOCK: 16, USE_RESTRICT: 1, PAD: 0, PRAGMA_VECTORIZE: 0}
+flops: "0"
+bytes: "8*M*N"
+rtol: 0.0
+atol: 0.0
+output: {shape: [N, M], dtype: float32}
+notes:
+  inputs: [x.bin]
+  output: out.bin
