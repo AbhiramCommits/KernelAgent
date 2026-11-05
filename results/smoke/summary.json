@@ -25,10 +25,10 @@
     "python": "3.11.14",
     "system": "Darwin"
   },
-  "generated_at": "2026-11-05T08:05:47.306590+00:00",
-  "geomean_speedup": 2.8486477761074624,
-  "git_sha": "714f878",
-  "library_geomean_speedup": 0.11959486069869321,
+  "generated_at": "2026-11-05T08:06:42.036076+00:00",
+  "geomean_speedup": 2.858804019038444,
+  "git_sha": "2c7a3ba",
+  "library_geomean_speedup": 0.12174202591870466,
   "problems": 4,
   "rows": [
     {
@@ -36,15 +36,15 @@
       "cached": true,
       "check_message": "ok",
       "check_passed": true,
-      "compile_time_s": 0.511043,
+      "compile_time_s": 0.488074,
       "error": null,
-      "gbps": 0.6860745095279388,
-      "gflops": 29.27251240652539,
-      "library_ms": 0.02545899769756943,
+      "gbps": 0.6862657911828259,
+      "gflops": 29.280673757133908,
+      "library_ms": 0.024916997062973678,
       "library_name": "numpy.matmul (BLAS)",
-      "library_speedup": 0.022210145770305466,
-      "ms_mad": 0.0201528334,
-      "ms_median": 1.14627783,
+      "library_speedup": 0.021743370950472237,
+      "ms_mad": 0.016875,
+      "ms_median": 1.14595833,
       "profile_source": "derived",
       "reps": 5,
       "shape": "small",
@@ -53,46 +53,7 @@
         "M": 256,
         "N": 256
       },
-      "speedup": 2.0075121491270576,
-      "task": "sgemm_tiled",
-      "torch_ms": null,
-      "variant": {
-        "cflags": [],
-        "knobs": {
-          "LOOP_ORDER": 1,
-          "PRAGMA_VECTORIZE": 0,
-          "TILE_K": 16,
-          "TILE_M": 32,
-          "TILE_N": 16,
-          "UNROLL": 2,
-          "USE_RESTRICT": 1
-        },
-        "provenance": "mutation:loop-order"
-      }
-    },
-    {
-      "build_ok": true,
-      "cached": true,
-      "check_message": "ok",
-      "check_passed": true,
-      "compile_time_s": 0.488074,
-      "error": null,
-      "gbps": 0.2303697738096461,
-      "gflops": 29.4873310476347,
-      "library_ms": 0.7247079993248917,
-      "library_name": "numpy.matmul (BLAS)",
-      "library_speedup": 0.019902088389696652,
-      "ms_mad": 0.0957500088,
-      "ms_median": 36.413666,
-      "profile_source": "derived",
-      "reps": 5,
-      "shape": "large",
-      "shape_dims": {
-        "K": 512,
-        "M": 1024,
-        "N": 1024
-      },
-      "speedup": 2.335735929472193,
+      "speedup": 1.9881831130805603,
       "task": "sgemm_tiled",
       "torch_ms": null,
       "variant": {
@@ -114,34 +75,38 @@
       "cached": true,
       "check_message": "ok",
       "check_passed": true,
-      "compile_time_s": 0.465342,
+      "compile_time_s": 0.488074,
       "error": null,
-      "gbps": 24.88082506152869,
-      "gflops": 6.214137771464728,
-      "library_ms": 0.11866600107168779,
-      "library_name": "numpy sum(axis=1)",
-      "library_speedup": 0.7032460016710748,
-      "ms_mad": 0.00045725625,
-      "ms_median": 0.168740385,
+      "gbps": 0.23023488404007134,
+      "gflops": 29.47006515712913,
+      "library_ms": 0.723625002137851,
+      "library_name": "numpy.matmul (BLAS)",
+      "library_speedup": 0.019860710913622917,
+      "ms_mad": 0.0758749957,
+      "ms_median": 36.435,
       "profile_source": "derived",
       "reps": 5,
-      "shape": "small",
+      "shape": "large",
       "shape_dims": {
+        "K": 512,
         "M": 1024,
         "N": 1024
       },
-      "speedup": 3.837156706736209,
-      "task": "reduce_sum",
+      "speedup": 2.3483555098119937,
+      "task": "sgemm_tiled",
       "torch_ms": null,
       "variant": {
         "cflags": [],
         "knobs": {
-          "ACCUMULATORS": 4,
-          "PRAGMA_VECTORIZE": 0,
-          "UNROLL": 4,
+          "LOOP_ORDER": 1,
+          "PRAGMA_VECTORIZE": 1,
+          "TILE_K": 16,
+          "TILE_M": 32,
+          "TILE_N": 16,
+          "UNROLL": 2,
           "USE_RESTRICT": 1
         },
-        "provenance": "mutation:increase-ACCUMULATORS"
+        "provenance": "mutation:loop-order"
       }
     },
     {
@@ -149,15 +114,50 @@
       "cached": true,
       "check_message": "ok",
       "check_passed": true,
-      "compile_time_s": 0.465342,
+      "compile_time_s": 0.49418,
       "error": null,
-      "gbps": 21.77799014338735,
-      "gflops": 5.44416525037013,
-      "library_ms": 4.056124998896848,
+      "gbps": 24.924422317265048,
+      "gflops": 6.225026451921807,
+      "library_ms": 0.12983399938093498,
       "library_name": "numpy sum(axis=1)",
-      "library_speedup": 0.6581012836143911,
-      "ms_mad": 0.0275830025,
-      "ms_median": 6.163375,
+      "library_speedup": 0.7707787327815245,
+      "ms_mad": 0.000278542783,
+      "ms_median": 0.168445228,
+      "profile_source": "derived",
+      "reps": 5,
+      "shape": "small",
+      "shape_dims": {
+        "M": 1024,
+        "N": 1024
+      },
+      "speedup": 3.8598350794479024,
+      "task": "reduce_sum",
+      "torch_ms": null,
+      "variant": {
+        "cflags": [],
+        "knobs": {
+          "ACCUMULATORS": 4,
+          "PRAGMA_VECTORIZE": 1,
+          "UNROLL": 8,
+          "USE_RESTRICT": 1
+        },
+        "provenance": "mutation:ilp-UNROLL"
+      }
+    },
+    {
+      "build_ok": true,
+      "cached": true,
+      "check_message": "ok",
+      "check_passed": true,
+      "compile_time_s": 0.488341,
+      "error": null,
+      "gbps": 21.791690884000325,
+      "gflops": 5.447590226479422,
+      "library_ms": 4.064959000970703,
+      "library_name": "numpy sum(axis=1)",
+      "library_speedup": 0.6599495090463028,
+      "ms_mad": 0.0100840043,
+      "ms_median": 6.1595,
       "profile_source": "derived",
       "reps": 5,
       "shape": "large",
@@ -165,61 +165,61 @@
         "M": 2048,
         "N": 16384
       },
-      "speedup": 3.6598522724968054,
+      "speedup": 3.7063682117054952,
       "task": "reduce_sum",
       "torch_ms": null,
       "variant": {
         "cflags": [],
         "knobs": {
           "ACCUMULATORS": 4,
-          "PRAGMA_VECTORIZE": 0,
+          "PRAGMA_VECTORIZE": 1,
           "UNROLL": 4,
           "USE_RESTRICT": 1
         },
-        "provenance": "mutation:increase-ACCUMULATORS"
+        "provenance": "mutation:vectorize-pragma"
       }
     }
   ],
   "search_runs": [
     {
-      "best_speedup": 2.0075121491270576,
+      "best_speedup": 1.9881831130805603,
       "seed": 0,
       "shape": "K=256,M=256,N=256",
       "stop_reason": "budget",
       "task": "sgemm_tiled",
       "tokens": 0,
       "trials": 4,
-      "wall_s": 0.36393745800160104
+      "wall_s": 0.3618771659967024
     },
     {
-      "best_speedup": 2.335735929472193,
+      "best_speedup": 2.3483555098119937,
       "seed": 0,
       "shape": "K=512,M=1024,N=1024",
       "stop_reason": "budget",
       "task": "sgemm_tiled",
       "tokens": 0,
       "trials": 4,
-      "wall_s": 3.1211420420004288
+      "wall_s": 3.056112416998076
     },
     {
-      "best_speedup": 3.837156706736209,
+      "best_speedup": 3.8598350794479024,
       "seed": 0,
       "shape": "M=1024,N=1024",
       "stop_reason": "budget",
       "task": "reduce_sum",
       "tokens": 0,
       "trials": 4,
-      "wall_s": 0.3451412499998696
+      "wall_s": 0.33011329200235195
     },
     {
-      "best_speedup": 3.6598522724968054,
+      "best_speedup": 3.7063682117054952,
       "seed": 0,
       "shape": "M=2048,N=16384",
       "stop_reason": "budget",
       "task": "reduce_sum",
       "tokens": 0,
       "trials": 4,
-      "wall_s": 1.0581315409945091
+      "wall_s": 1.0134190830067382
     }
   ],
   "seeds": [
@@ -228,5 +228,5 @@
   "solve_rate": 1.0,
   "strategy": "mutation",
   "trials": 16,
-  "wall_s": 6.637881875001767
+  "wall_s": 6.47639070799778
 }
