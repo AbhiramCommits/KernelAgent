@@ -1,24 +1,26 @@
 .PHONY: setup lint test smoke experiments report clean format
 
-PY ?= .venv/bin/python
-PIP ?= .venv/bin/pip
+VENV := .venv
+# Use the project virtualenv when `make setup` has created one; otherwise fall
+# back to the active interpreter (CI installs into the runner's Python).
+PY ?= $(if $(wildcard $(VENV)/bin/python),$(VENV)/bin/python,python)
 
-setup: .venv/bin/python
-	$(PIP) install -q --upgrade pip
-	$(PIP) install -q -e ".[dev]"
+setup: $(VENV)/bin/python
+	$(VENV)/bin/pip install -q --upgrade pip
+	$(VENV)/bin/pip install -q -e ".[dev]"
 
-.venv/bin/python:
-	python3.11 -m venv .venv
+$(VENV)/bin/python:
+	python3.11 -m venv $(VENV)
 
 lint:
-	.venv/bin/ruff check kernelagent tests experiments scripts
-	.venv/bin/mypy kernelagent
+	$(PY) -m ruff check kernelagent tests experiments scripts
+	$(PY) -m mypy kernelagent
 
 test:
-	.venv/bin/pytest -q -m "not gpu and not llm"
+	$(PY) -m pytest -q -m "not gpu and not llm"
 
 smoke:
-	.venv/bin/python scripts/smoke.py
+	$(PY) scripts/smoke.py
 
 experiments:
 	$(PY) -m experiments.exp01_strategies
